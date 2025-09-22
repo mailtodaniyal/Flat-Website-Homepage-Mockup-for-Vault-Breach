@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Breach - Cybersecurity & Compliance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0F1419;
+            --card-bg: #1A1F27;
+            --accent: #ffae00;
+            --accent-dark: #ffae00;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B7C3;
+            --border: #2A303C;
+            --success: #00D4AA;
+            --warning: #FF6B35;
+            --gradient: linear-gradient(135deg, #ffae00 0%, #c28503 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .angular-divider {
+            height: 4px;
+            background: var(--gradient);
+            clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 40px 100%);
+            margin: 2rem 0;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(15, 20, 25, 0.98);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, calc(100% - 4px) 100%, 4px 100%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 163, 255, 0.3);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 12rem 0 8rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #151B22 100%);
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 163, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 163, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+        }
+
+        .secondary-button:hover {
+            background: rgba(0, 163, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Ticker */
+        .stats-ticker {
+            background: var(--card-bg);
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: tickerScroll 30s linear infinite;
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-right: 4rem;
+            white-space: nowrap;
+        }
+
+        .ticker-value {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .ticker-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Services Preview */
+        .services-preview {
+            padding: 6rem 0;
+            background: var(--dark-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-hexagon {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .service-hexagon:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-hexagon::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: var(--gradient);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-hexagon:hover::before {
+            opacity: 0.1;
+        }
+
+        .hexagon-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .service-hexagon h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .service-hexagon p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Client Logos */
+        .client-logos {
+            padding: 4rem 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .client-logo {
+            opacity: 0.6;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .client-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        /* Detailed Services */
+        .detailed-services {
+            padding: 6rem 0;
+            background: var(--dark-bg);
+        }
+
+        .service-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .service-detail:nth-child(even) .service-visual {
+            order: 2;
+        }
+
+        .service-detail:nth-child(even) .service-text {
+            order: 1;
+        }
+
+        .service-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .service-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .service-visual {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 40px 100%, 0 calc(100% - 40px));
+        }
+
+        .service-visual::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: var(--gradient);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 40px 100%, 0 calc(100% - 40px));
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .testimonial-slider {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background: var(--dark-bg);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            margin: 0 1rem;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 40px 100%, 0 calc(100% - 40px));
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .author-info p {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .slider-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 0;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #151B22 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 163, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 163, 255, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .scan-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .scan-button:hover::after {
+            left: 100%;
+        }
+
+        .scan-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 163, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .service-detail {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .service-detail:nth-child(even) .service-visual {
+                order: 1;
+            }
+            
+            .service-detail:nth-child(even) .service-text {
+                order: 2;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <img style="height: 50px;" src="logo.png" alt="">
+                <!-- <div class="logo-icon">VB</div>
+                <span>Vault Breach</span> -->
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Services</a>
+                <a href="#">Blog</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <button class="cta-button">Get Started</button>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in">Secure Your Systems.<br>Simplify Compliance.</h1>
+            <p class="fade-in">Expert cybersecurity consulting to protect your business and navigate complex regulatory frameworks with confidence.</p>
+            <div class="hero-buttons">
+                <button class="cta-button fade-in">Start Security Audit</button>
+                <button class="secondary-button fade-in">View Case Studies</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Ticker -->
+    <section class="stats-ticker">
+        <div class="container">
+            <div class="ticker-content">
+                <div class="ticker-item">
+                    <span class="ticker-value">2,847</span>
+                    <span class="ticker-label">Cyber Threats Neutralized</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-value">98.7%</span>
+                    <span class="ticker-label">Compliance Success Rate</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-value">$4.2M</span>
+                    <span class="ticker-label">Client Savings Generated</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-value">24/7</span>
+                    <span class="ticker-label">Security Monitoring</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="services-preview">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Core Services</h2>
+                <p>Comprehensive cybersecurity solutions designed for modern business challenges</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-hexagon fade-in">
+                    <div class="hexagon-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Compliance Frameworks</h3>
+                    <p>CMMC, FedRAMP, ISO, NIST compliance made achievable with our expert guidance</p>
+                </div>
+                <div class="service-hexagon fade-in">
+                    <div class="hexagon-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Cost Optimization</h3>
+                    <p>Reduce security expenses while maximizing protection and compliance effectiveness</p>
+                </div>
+                <div class="service-hexagon fade-in">
+                    <div class="hexagon-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Security Implementation</h3>
+                    <p>End-to-end security solutions from assessment to implementation and monitoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Logos -->
+    <section class="client-logos">
+        <div class="container">
+            <div class="logos-container">
+                <div class="client-logo">TECHCORP</div>
+                <div class="client-logo">INNOVATELLC</div>
+                <div class="client-logo">SECUREGROUP</div>
+                <div class="client-logo">DATASHIELD</div>
+                <div class="client-logo">CYBERNET</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Services -->
+    <section class="detailed-services">
+        <div class="container">
+            <div class="service-detail">
+                <div class="service-text fade-in">
+                    <h3>Compliance Frameworks Made Simple</h3>
+                    <p>Our specialized approach transforms complex compliance requirements into clear, actionable strategies. We demystify CMMC, FedRAMP, ISO, and NIST frameworks, providing your team with the tools and knowledge needed for successful certification.</p>
+                    <p>With our proven methodology, we streamline the entire compliance process, significantly reducing the time and resources required while ensuring robust, sustainable security practices.</p>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">6-8</span>
+                            <span class="stat-label">Weeks to Compliance</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">94%</span>
+                            <span class="stat-label">Cost Reduction</span>
+                        </div>
+                    </div>
+                    <button class="cta-button">Explore Frameworks</button>
+                </div>
+                <div class="service-visual fade-in">
+                    Compliance Architecture Dashboard
+                </div>
+            </div>
+            
+            <div class="angular-divider"></div>
+            
+            <div class="service-detail">
+                <div class="service-text fade-in">
+                    <h3>Cost Optimization & Risk Reduction</h3>
+                    <p>Security investments should deliver maximum value. Our cost optimization strategies identify inefficiencies and opportunities, ensuring every dollar spent enhances your security posture without unnecessary overhead.</p>
+                    <p>Through comprehensive risk assessments and strategic planning, we help prioritize security initiatives based on potential business impact, enabling smarter resource allocation and significant risk mitigation.</p>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">40%</span>
+                            <span class="stat-label">Average Savings</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">72%</span>
+                            <span class="stat-label">Risk Reduction</span>
+                        </div>
+                    </div>
+                    <button class="cta-button">Optimize Security</button>
+                </div>
+                <div class="service-visual fade-in">
+                    Risk Management Interface
+                </div>
+            </div>
+            
+            <div class="angular-divider"></div>
+            
+            <div class="service-detail">
+                <div class="service-text fade-in">
+                    <h3>Security Consulting & Implementation</h3>
+                    <p>From initial security assessment to full-scale implementation, our experts work as an extension of your team to build resilient security architectures tailored to your specific business needs and threat landscape.</p>
+                    <p>We go beyond recommendations to hands-on implementation, ensuring your security controls are properly deployed, your team is trained, and your processes are established for long-term security effectiveness.</p>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">360°</span>
+                            <span class="stat-label">Protection Coverage</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">24/7</span>
+                            <span class="stat-label">Monitoring Support</span>
+                        </div>
+                    </div>
+                    <button class="cta-button">Implement Solutions</button>
+                </div>
+                <div class="service-visual fade-in">
+                    Security Implementation Hub
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Client Success Stories</h2>
+                <p>See how organizations are transforming their security posture with Vault Breach</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial fade-in">
+                    <div class="testimonial-text">
+                        "Vault Breach delivered exceptional results for our FedRAMP compliance initiative. Their team's expertise helped us achieve certification in record time while reducing our security costs by 35%. The precision and professionalism throughout the process were outstanding."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <h4>John Smith</h4>
+                            <p>CTO, TechSolutions Inc. • FedRAMP Certified</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="fade-in">Ready to Secure Your Digital Assets?</h2>
+                <p class="fade-in">Begin your journey to robust cybersecurity and compliance with our complimentary security assessment.</p>
+                <button class="scan-button fade-in">Start Free Security Scan</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Vault Breach</h3>
+                    <p>Advanced cybersecurity and compliance consulting to protect your business and simplify regulatory requirements with precision and expertise.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Compliance Frameworks</a></li>
+                        <li><a href="#">Cost Optimization</a></li>
+                        <li><a href="#">Security Implementation</a></li>
+                        <li><a href="#">Risk Assessment</a></li>
+                        <li><a href="#">Incident Response</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Vault Breach LLC. All rights reserved. | Secure Your Systems. Simplify Compliance.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = function() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        window.addEventListener('load', fadeInOnScroll);
+
+        // Testimonial slider
+        const dots = document.querySelectorAll('.slider-dot');
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                dots.forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Auto-advancing hero text
+        const heroTitle = document.querySelector('.hero h1');
+        const heroText = document.querySelector('.hero p');
+        
+        const heroContents = [
+            {
+                title: "Secure Your Systems.<br>Simplify Compliance.",
+                text: "Expert cybersecurity consulting to protect your business and navigate complex regulatory frameworks with confidence."
+            },
+            {
+                title: "Advanced Threat Protection<br>For Modern Business",
+                text: "Proactive security solutions that anticipate evolving threats and protect your critical assets 24/7."
+            },
+            {
+                title: "Achieve Compliance<br>With Precision",
+                text: "Streamlined compliance processes that reduce costs and complexity while ensuring regulatory success."
+            }
+        ];
+        
+        let currentHeroIndex = 0;
+        
+        function changeHeroContent() {
+            heroTitle.style.opacity = 0;
+            heroText.style.opacity = 0;
+            
+            setTimeout(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % heroContents.length;
+                heroTitle.innerHTML = heroContents[currentHeroIndex].title;
+                heroText.textContent = heroContents[currentHeroIndex].text;
+                
+                heroTitle.style.opacity = 1;
+                heroText.style.opacity = 1;
+            }, 500);
+        }
+        
+        setInterval(changeHeroContent, 5000);
+    </script>
+</body>
+</html>
